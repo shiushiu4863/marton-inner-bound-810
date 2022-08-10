@@ -1,0 +1,44 @@
+function hessi1(p, fuv, xTy, xTz, lambda, alpha)
+    p = reshape(p, [2, 2])
+    prob = zeros(2, 2, 3, 3, 3);
+    for u = 1:2
+        for v = 1:2
+            x0 = fuv(u, v);
+            for x = 1:3
+                for y = 1:3
+                    for z = 1:3
+                        if x == x0 
+                            prob(u, v, x, y, z) = p(u, v) * xTy(x, y) * xTz(x, z);
+                        end
+                    end
+                end
+            end
+        end
+    end
+    Auv = zeros(4, 4);
+    Auy = zeros(4, 4);
+    Avz = zeros(4 ,4);
+    Au = zeros(4, 4);
+    Ay = zeros(4, 4);
+    Az = zeros(4, 4);
+    p0 = reshape(p, [1, 4]);
+    for i = 1:sizeA
+        Auv(i, i) = p0(i);
+    end
+    puvy = sum(prob1, [3, 5]);
+    puvy = squeeze(puvy);
+    puy = sum(prob1, [2, 3, 5]);
+    puy = squeeze(puy);
+    for i = 1:sizeA
+        for j = 1:sizeA
+            [u1, v1] = ind2sub([2, 2], i);
+            [u2, v2] = ind2sub([2, 2], j);
+            for y = 1:3
+                if u1 == u2 && puy1(u1, y) > 1e-5
+                    Auy1(i, j) = Auy1(i, j) + puvy1(u1, v1, y) * puvy1(u2, v2, y) / puy(u1, y);
+                end
+            end
+        end
+    end
+
+end

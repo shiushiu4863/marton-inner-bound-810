@@ -1,0 +1,96 @@
+function check_hessian()
+    input_file = fopen('2.34output0.46.txt', 'r');
+    dtb = zeros(100, 26);
+    for number = 1:100
+        str = fscanf(input_file, '%s', 1);
+        %disp(str)
+        trial = fscanf(input_file, '%d', 1);
+        %disp(trial)
+        str = fscanf(input_file, '%s', 1);
+        %disp(str)
+        xTy = fscanf(input_file, '%f', 9);
+        %disp(xTy);
+        for i = 1:9
+            dtb(number, i) = xTy(i);
+        end
+        str = fscanf(input_file, '%s', 1);
+        %disp(str)
+        xTz = fscanf(input_file, '%f', 9);
+        %disp(xTz)
+        for i = 10:18
+            dtb(number, i) = xTz(i - 9);
+        end
+        str = fscanf(input_file, '%s', 1);
+        %disp(str)
+        p = fscanf(input_file, '%f', 4);
+        %disp(p)
+        for i = 19:22
+            dtb(number, i) = p(i - 18);
+        end
+        str = fscanf(input_file, '%s', 1);
+        %disp(str)
+        fuv = fscanf(input_file, '%f', 4);
+        %disp(fuv)
+        for i = 23:26
+            dtb(number, i) = fuv(i - 22);
+        end
+        str = fscanf(input_file, '%s', 1);
+        %disp(str)
+        lambda = fscanf(input_file, '%f', 1);
+        %disp(lambda)
+        %dtb(number, 27) = lambda;
+        str = fscanf(input_file, '%s', 1);
+        %disp(str)
+        alpha = fscanf(input_file, '%f', 1);
+        %disp(alpha)
+        %dtb(number, 28) = alpha;
+    end
+    disp(dtb)
+    disp('lambda')
+    disp(lambda)
+    disp('alpha')
+    disp(alpha)
+    r1 = randi([1, 100]);
+    r2 = randi([1, 100]);
+    disp('r1')
+    disp(r1)
+    disp('r2')
+    disp(r2)
+    p1 = zeros(4);
+    p2 = zeros(4);
+    fuv1 = zeros(4);
+    fuv2 = zeros(4);
+    xTy1 = zeros(9);
+    xTy2 = zeros(9);
+    xTz1 = zeros(9);
+    xTz2 = zeros(9);
+    for i = 1:9
+        xTy1(i) = dtb(r1, i);
+        xTy2(i) = dtb(r2, i);
+    end
+    for i = 10:18
+        xTz1(i - 9) = dtb(r1, i);
+        xTz2(i - 9) = dtb(r2, i);
+    end
+
+    disp('xTz2')
+    disp(xTz2)
+    for i = 19:22
+        p1(i - 18) = dtb(r1, i);
+        p2(i - 18) = dtb(r2, i);
+    end
+    for i = 23:26
+        fuv1(i - 22) = dtb(r1, i);
+        fuv2(i - 22) = dtb(r2, i);
+    end
+    disp('xTy1')
+    disp(xTy1)
+    disp('xTz1')
+    disp(xTz1)
+    disp('p1')
+    disp(p1)
+    disp('fuv1')
+    disp(fuv1)
+    fclose(input_file);
+
+end
